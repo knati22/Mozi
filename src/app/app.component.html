@@ -1,0 +1,43 @@
+<!-- * * * * * * *<router-outlet /> * * * * * * * * * * * * * * * * * * * * * * * * -->
+<mat-sidenav-container>
+  <mat-sidenav #sidenav>
+    <app-menu [sidenav]="sidenav" [bejelentkezve]="bejelentkezve" (logoutEvent)="kijelentkezes()"></app-menu>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar>
+      <button 
+        mat-button 
+        (click)="onToggleSidenav(sidenav)"
+        class="menu-toggle-button">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <div class="alma">Csillag Mozi</div>
+      <nav>
+        <ul>
+          <li><a routerLink="/home">Főoldal</a></li>
+          <li><a routerLink="/rolunk">Rólunk</a></li>
+          
+          @if (bejelentkezve) {
+            <li><a routerLink="/profil">Profil</a></li>
+          }
+          
+          @if (!bejelentkezve) {
+            <li><a routerLink="/bejelentkezes">Bejelentkezés</a></li>
+          }
+
+          @if (!bejelentkezve) {
+            <li><a routerLink="/regisztracio">Regisztráció</a></li>
+          }
+          
+          @if (bejelentkezve) {
+            <li><a href="#" (click)="$event.preventDefault(); kijelentkezes()">Kijelentkezés</a></li>
+          }
+        </ul>
+      </nav>
+    </mat-toolbar>
+    <router-outlet />
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+

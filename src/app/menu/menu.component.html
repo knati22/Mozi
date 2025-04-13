@@ -1,0 +1,34 @@
+<mat-nav-list>
+    <a mat-list-item routerLink="/home" routerLinkActive="active-list-item" (click)="closeMenu()">
+      <mat-icon matListItemIcon>movie</mat-icon>
+      <span matListItemTitle>Főoldal</span>
+    </a>
+    <a mat-list-item routerLink="/rolunk" routerLinkActive="active-list-item" (click)="closeMenu()">
+      <mat-icon matListItemIcon>star</mat-icon>
+      <span matListItemTitle>Rolunk</span>
+    </a>
+    @if (bejelentkezve) {
+      <a mat-list-item routerLink="/profile" routerLinkActive="active-list-item" (click)="closeMenu()">
+        <mat-icon matListItemIcon>person</mat-icon>
+        <span matListItemTitle>Profil</span>
+      </a>
+    }
+    @if (!bejelentkezve) {
+      <a mat-list-item routerLink="/bejelentkezes" routerLinkActive="active-list-item" (click)="closeMenu()">
+        <mat-icon matListItemIcon>login</mat-icon>
+        <span matListItemTitle>Bejelentkezés</span>
+      </a>
+    }
+    @if (!bejelentkezve) {
+      <a mat-list-item routerLink="/regisztracio" routerLinkActive="active-list-item" (click)="closeMenu()">
+        <mat-icon matListItemIcon>app_registration</mat-icon>
+        <span matListItemTitle>Regisztráció</span>
+      </a>
+    }
+    @if (bejelentkezve) {
+      <a mat-list-item (click)="kijelentkezes()">
+        <mat-icon matListItemIcon>logout</mat-icon>
+        <span matListItemTitle>Kijelentkezés</span>
+      </a>
+    }
+  </mat-nav-list>
