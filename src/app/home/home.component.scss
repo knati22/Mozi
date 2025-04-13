@@ -1,0 +1,40 @@
+.gep{
+    display: block;
+}
+img{
+    width: 100%;
+}
+.mobil{
+    display: none;
+}
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .film-card {
+    width: 300px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+h1{
+    text-align: center;
+}
+button{
+    max-width: 200px;
+    margin: 10px;
+}
+@media (max-width: 768px) {
+    .mobil{
+        display: block;
+    }
+    .gep{
+        display: none;
+    }
+}

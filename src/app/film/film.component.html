@@ -1,1 +1,13 @@
-<p>film works!</p>
+<mat-card *ngIf="film" class="card">
+        <img mat-card-image [src]="film.kep" [alt]="film.nev" />
+    <div class="szoveg">
+    <mat-card-content>
+    <mat-card-title>{{ film.nev }}</mat-card-title>
+      <p>Műfaj: {{ film.mufaj }}</p>
+      <p>Hossz: {{ film.hossz }} perc</p>
+      <p>Kiadás éve: {{ film.kiadasev }}</p>
+      <p>{{ film.leiras }}</p>
+      <p>Terem: {{ film.terem.nev }}</p>
+      <p>Dátum: {{ film.ido | date:'yyyy-MM-dd' }}</p>
+    </mat-card-content></div>
+  </mat-card>

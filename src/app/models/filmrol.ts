@@ -4,5 +4,7 @@ export interface Filmrol {
   ido: Date;
   terem: Terem;
   leiras: string;
-  rendezo: string;
+  mufaj: string;
+  hossz: number;
+  kiadasev: number;
 }
