@@ -8,6 +8,7 @@ export const FilmObject = [
       'mufaj': "Akció",
       'hossz': 117,
       'kiadasev': 2025, 
+      'ertekeles': 3,
       'kep': 'melos.jpg'
   },
     {
@@ -18,6 +19,7 @@ export const FilmObject = [
         'mufaj': "Amerikai romantikus dráma",
         'hossz': 102,
         'kiadasev': 1942,
+      'ertekeles': 5,
       'kep': 'casa.jpg'
     },
     {
@@ -28,6 +30,7 @@ export const FilmObject = [
       'mufaj': "Vígjáték, Családi",
       'hossz': 101,
       'kiadasev': 2025,
+      'ertekeles': 4,
       'kep': 'minecraft.jpeg'
   }
    ]

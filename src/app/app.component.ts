@@ -6,6 +6,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { MenuComponent } from './menu/menu.component';
+import { AuthService } from './shared/services/auth.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -26,18 +28,25 @@ import { MenuComponent } from './menu/menu.component';
 export class AppComponent {
   title = 'mozi';
   bejelentkezve = false;
-  ngOnInit(): void {
-    this.checkLoginStatus();
+  private authSubscription?: Subscription;
+
+  constructor(private authService: AuthService) {}
+
+    ngOnInit(): void {  if (this.authService.currentUser) {
+    this.authSubscription = this.authService.currentUser.subscribe(user => {
+      this.bejelentkezve = !!user;
+      localStorage.setItem('bejelentkezve', this.bejelentkezve ? 'true' : 'false');
+    });
+  } else {
+    console.error('authService.currentUser nincs inicializálva');
+  }
   }
 
-  checkLoginStatus(): void {
-    this.bejelentkezve = localStorage.getItem('bejelentkezve') === 'true';
-  }
+
+  
 
   kijelentkezes(): void {
-    localStorage.setItem('bejelentkezve', 'false');
-    this.bejelentkezve = false;
-    window.location.href = '/home';
+    this.authService.signOut();
   }
 
   onToggleSidenav(sidenav: MatSidenav){

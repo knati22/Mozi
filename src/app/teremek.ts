@@ -5,7 +5,8 @@ export const TeremObject = [
         'helyek':{
             sorok:10,
             oszlopok: 10,
-        }
+        },
+        'ossz': 20
     }, 
     {
         'id': 2,
@@ -13,6 +14,7 @@ export const TeremObject = [
       'helyek':{
           'sorok':10,
           'oszlopok': 10,
-      }
+      },
+        'ossz': 20
   }
    ];

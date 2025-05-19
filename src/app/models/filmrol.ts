@@ -6,5 +6,6 @@ export interface Filmrol {
   leiras: string;
   mufaj: string;
   hossz: number;
+  ertekeles: number;
   kiadasev: number;
 }

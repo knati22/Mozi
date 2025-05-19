@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Felhasznalo } from '../models/felhasznalo';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -21,55 +22,84 @@ import { Felhasznalo } from '../models/felhasznalo';
     MatIconModule,
     MatProgressSpinnerModule,
     RouterLink
-  ],
+  ],   
   templateUrl: './regisztracio.component.html',
   styleUrl: './regisztracio.component.scss'
 })
 export class RegisztracioComponent {
   signUpForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
-    jelszo: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    ujbol: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    rePassword: new FormControl('', [Validators.required]),
     nev: new FormGroup({
-      vezeteknev: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      keresztnev: new FormControl('', [Validators.required, Validators.minLength(3)])
+      vezeteknev: new FormControl('', [Validators.required, Validators.minLength(2)]),
+      keresztnev: new FormControl('', [Validators.required, Validators.minLength(2)])
     })
   });
-  
+
   isLoading = false;
   showForm = true;
   signupError = '';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   signup(): void {
     if (this.signUpForm.invalid) {
-      this.signupError = 'Hibásan adta meg az adatait, kérem javítsa!';
+      this.signupError = 'Hiba';
       return;
     }
 
-    const jelszo = this.signUpForm.get('jelszo');
-    const ujbol = this.signUpForm.get('ujbol');
-
-    if (jelszo?.value !== ujbol?.value) {
+    const password = this.signUpForm.get('password')?.value;
+    const rePassword = this.signUpForm.get('rePassword')?.value;
+    
+    if (password !== rePassword) {
+      this.signupError = 'A két jelszó nem egyezik';
       return;
     }
 
     this.isLoading = true;
     this.showForm = false;
 
-    const newUser: Felhasznalo = {
+    const userData: Partial<Felhasznalo> = {
       nev: {
         vezeteknev: this.signUpForm.value.nev?.vezeteknev || '',
         keresztnev: this.signUpForm.value.nev?.keresztnev || ''
       },
       email: this.signUpForm.value.email || '',
-      jelszo: this.signUpForm.value.jelszo || '',
-      jegyei: []
+      jegyei: [],
     };
 
-    console.log('New user:', newUser);
-    console.log('Form value:', this.signUpForm.value);
-    this.router.navigateByUrl('/home');
+    const email = this.signUpForm.value.email || '';
+    const pw = this.signUpForm.value.password || '';
+
+    this.authService.signUp(email, pw, userData)
+      .then(userCredential => {
+        console.log('Regisztáció sikerült:', userCredential.user);
+        this.authService.updateLoginStatus(true);
+        this.router.navigateByUrl('/home');
+      })
+      .catch(error => {
+        console.error('Regisztrációs hiba:', error);
+        this.isLoading = false;
+        this.showForm = true;
+        
+        switch(error.code) {
+          case 'auth/email-already-in-use':
+            this.signupError = 'This email already in use.';
+            break;
+          case 'auth/invalid-email':
+            this.signupError = 'Rossz email.';
+            break;
+          case 'auth/weak-password':
+            this.signupError = 'Minimum hat kerekteres legyen a jelszó.';
+            break;
+          default:
+            this.signupError = 'Hiba';
+        }
+      });
   }
 }
+

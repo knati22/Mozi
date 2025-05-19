@@ -5,15 +5,17 @@ import { CommonModule } from '@angular/common';
 import {MatCardModule} from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router'; 
+import { StarPipe } from '../pipes/star.pipe';
 
 @Component({
   selector: 'app-film',
   imports: [MatCardModule, CommonModule, 
-    MatButtonModule],
+    MatButtonModule, StarPipe],
   templateUrl: './film.component.html',
   styleUrl: './film.component.scss'
 })
 export class FilmComponent implements OnInit{
+  textColor = '#C23327';
   film: any;
   ngOnInit() {
     const storedFilm = localStorage.getItem('selectedFilm');

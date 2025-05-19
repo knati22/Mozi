@@ -4,5 +4,6 @@ export interface Terem {
     helyek:{
         sorok:number;
         oszlopok: number;
-    }
+    },
+        'ossz': 20
 }

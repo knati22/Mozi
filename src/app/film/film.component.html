@@ -6,8 +6,9 @@
       <p>Műfaj: {{ film.mufaj }}</p>
       <p>Hossz: {{ film.hossz }} perc</p>
       <p>Kiadás éve: {{ film.kiadasev }}</p>
+      <p>Értékelés: {{ film.ertekeles | star }}</p>
       <p>{{ film.leiras }}</p>
       <p>Terem: {{ film.terem.nev }}</p>
-      <p>Dátum: {{ film.ido | date:'yyyy-MM-dd' }}</p>
+      <p [ngStyle]="{ 'color': textColor }" >Dátum: {{ film.ido | date:'yyyy-MM-dd' }}</p>
     </mat-card-content></div>
   </mat-card>
